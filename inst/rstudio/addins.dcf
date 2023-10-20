@@ -1,0 +1,9 @@
+Name: Render assignment
+Description: Renders the current assignment file and a solutions file
+Binding: render
+Interactive: false
+
+Name: Create assignment
+Description: Creates a new file with a template assignment
+Binding: create
+Interactive: false

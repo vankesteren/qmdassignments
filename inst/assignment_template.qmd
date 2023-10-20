@@ -1,0 +1,122 @@
+---
+title: "Assignment template"
+author: "qmdassignments"
+date: last-modified
+callout-appearance: simple
+params:
+  answers: false
+format: 
+  html: 
+    toc: true
+    toc-depth: 2
+    self-contained: true
+---
+
+# Introduction
+
+Welcome to the assignment!
+
+The goals for this assignment are as follows:
+
+- Get an idea of the basics of qmd assignments
+- Register a convenient snippet to insert questions
+- Ensure that any dependencies for the assignment are always rendered, even if no solutions are required.
+
+:::{.callout-important}
+## Here is an important message before we start
+
+Be sure to follow every step of the assignment!
+:::
+
+We will use the following packages:
+ 
+```{r}
+#| label: packages
+#| warning: false
+#| message: false
+library(tidyverse)
+```
+
+# Basics of qmd assignments
+
+An assignment consists of descriptions and questions. Descriptions are plaintext, just like what you are reading right now. Questions (and their solutions) are embedded in a plain "callout block", like this:
+
+::: {.callout-tip icon=false}
+## 1. Here is the first question of the assignment.
+
+Here is some extra information or a tip how to use a specific function such as `ggplot()` or data such as `mtcars`.
+
+```{r}
+#| label: q1
+#| include: !expr params$answers
+#| eval: !expr params$answers
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point()
+```
+:::
+
+A new question can be added using a snippet. To register the snippet, add the following lines to your RStudio snippets file (Tools > Global Options > Code > Edit snippets > Markdown)
+
+```{verbatim}
+snippet que
+	`r qmdassignments::question(FALSE)`
+```
+
+Then, within this .qmd file, just enter `que` and press `shift+tab`! Then the following will appear:
+
+::: {.callout-tip icon=false}
+## 2. Perform a certain task
+
+Hint: use R code to do this!
+
+```{r}
+#| label: q2
+#| include: !expr params$answers
+#| eval: !expr params$answers
+# R code here
+```
+:::
+
+Note that the numbering is ✨ automagical ✨ (but it only looks at questions above, it does not edit anything below your cursor).
+
+# Details on rendering
+
+Rendering can be done by running the function `qmdassignments::render()`. This can also be done via an addin: in the toolbar, go to Addins and select "Render assignments" from the drop-down. This will create:
+
+- an assignment html file without answers
+- an solutions html file with answers. The file name will also include a random hash.
+
+::: {.callout-tip icon=false}
+## 3. Try to render this document!
+
+Don't forget to save it first.
+
+```{r}
+#| label: q3
+#| include: !expr params$answers
+#| eval: false
+qmdassignments::render()
+```
+:::
+
+Sometimes, you'll need to run code blocks even though you will not show them in the answers. This is needed if later code blocks depend on this. In this case, remove the `#| eval: !expr params$answers` line from the code chunk like so:  
+
+::: {.callout-tip icon=false}
+## 4. Create a data frame with two columns, x and y
+
+```{r}
+#| label: q4
+#| include: !expr params$answers
+df <- data.frame(x = rnorm(10), y = rnorm(10))
+```
+
+:::
+
+Your scatter plot should look like this:
+
+```{r}
+#| label: scatter
+#| include: false
+ggplot(df, aes(x, y)) + geom_point()
+
+```
